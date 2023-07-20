@@ -1,0 +1,78 @@
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+<div class="container-fluid mt-2">
+  <div class="container mb-3">
+    <div class="mt-3 d-flex justify-content-between">
+      <div *ngIf="!examMode">
+        <h2 class="text-center text-primary fw-bold">View Exam Pepar</h2>
+      </div>
+      <div *ngIf="examMode">
+        <h4 class="fw-bold text-danger">
+          Exam submited with in 10 Miniutes other wise not submited
+        </h4>
+      </div>
+      <div>
+        <a class="btn btn-md btn-primary" (click)="changeMode()">Start Exam</a>
+      </div>
+    </div>
+    <hr />
+    <form [formGroup]="answerForm">
+      <div class="mt-3 border p-3 rounded" formArrayName="questions">
+        <ng-container
+          *ngFor="let question of questionsAdd.controls; let i = index"
+        >
+          <div [formGroupName]="i">
+            <div class="p-1 fw-bold">
+              Question : <span class="text-danger">{{ i + 1 }}</span>
+            </div>
+            <div class="col-lg-12 mt-2">
+              <div class="p-inputgroup mb-2">
+                <input
+                  type="text"
+                  [readOnly]="true"
+                  pInputText
+                  class="p-inputtext-lg"
+                  formControlName="question"
+                  placeholder="Enter Your Question : {{ i + 1 }}"
+                />
+              </div>
+              <div class="mt-1 d-flex flex-column">
+                <ul>
+                  <li class="p-2" *ngFor="let option of options[i].options">
+                    {{ option }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div *ngIf="examMode" class="mt-2 col-lg-4">
+              <select
+                class="form-select form-select-lg mb-3"
+                aria-label=".form-select-lg example"
+                formControlName="answer"
+              >
+                <option
+                  [value]="option"
+                  *ngFor="let option of options[i].options"
+                >
+                  {{ option }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <hr />
+        </ng-container>
+        <div>
+          <button
+            class="btn btn-lg btn-primary"
+            *ngIf="examMode"
+            (click)="submiteExam()"
+          >
+            Submit Exam
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

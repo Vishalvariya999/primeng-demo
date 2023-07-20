@@ -1,0 +1,39 @@
+<div class="container-fluid mt-2 mb-3">
+  <div class="container">
+    <h2 class="text-center text-primary fw-bold">View Exam Pepar</h2>
+    <hr />
+    <div class="mt-3 border p-3 rounded">
+      <ng-container *ngFor="let question of questionsData; let i = index">
+        <div>
+          <div class="p-1 fw-bold mb-1">
+            Question : <span class="text-danger">{{ i + 1 }}</span>
+          </div>
+          <div class="col-lg-12">
+            <div class="border rounded">
+              <h5 class="p-2 mt-2 mx-2">{{ question?.question }}</h5>
+            </div>
+            <div
+              class="mt-1 d-flex flex-column"
+              *ngFor="let option of question?.options"
+            >
+              <ul>
+                <li>{{ option }}</li>
+              </ul>
+            </div>
+            <div class="col-md-12 mb-2">
+              <ul>
+                <li class="fw-bold">
+                  Answer :
+                  <span class="fw-bold text-danger">{{
+                    question?.answer
+                  }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </ng-container>
+    </div>
+  </div>
+</div>

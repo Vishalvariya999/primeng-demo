@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="mt-5 p-5 shadow rounded">
+      <h2 class="h2 p-2 text-center text-primary">Student Profile</h2>
+      <hr />
+      <div class="d-flex flex-row justify-content-between">
+        <div>
+          <img
+            src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
+            alt=""
+            width="150px"
+          />
+        </div>
+        <div>
+          <a
+            class="btn btn-lg btn-primary"
+            id="btnEditProfile"
+            (click)="changeMode()"
+            >Edit</a
+          >
+        </div>
+      </div>
+      <form class="row" [formGroup]="editForm">
+        <div class="form-group col-lg-6">
+          <label for="" class="form-label mt-1 p-1 fs-4">Name :</label><br />
+          <span class="p-1 fs-4 text-success" *ngIf="!editMode">{{
+            studentPro?.name
+          }}</span>
+          <input
+            type="text"
+            formControlName="name"
+            id="studentName"
+            class="form-control form-control-lg mt-1"
+            *ngIf="editMode"
+          />
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="" class="form-label mt-1 p-1 fs-4">E-mail :</label><br />
+          <span class="p-1 fs-4 text-success" *ngIf="!editMode">{{
+            studentPro?.email
+          }}</span>
+          <input
+            type="text"
+            formControlName="email"
+            id="studentEmail"
+            class="form-control form-control-lg mt-1"
+            *ngIf="editMode"
+          />
+        </div>
+        <div class="mt-3">
+          <!-- <button class="btn btn-lg btn-primary w-25" (click)="editData()" *ngIf="editMode">Edit</button> -->
+          <button
+            *ngIf="editMode"
+            id="onUpdate"
+            class="btn btn-lg btn-primary mb-2"
+            (click)="editData()"
+            type="button"
+          >
+            <span
+              *ngIf="fetching"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            {{ fetching ? "Updating..." : "Update" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

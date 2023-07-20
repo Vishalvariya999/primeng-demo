@@ -1,0 +1,112 @@
+<div class="card w-75 mx-auto">
+  <p-table
+    #dt2
+    [columns]="columns"
+    [value]="tableData"
+    [showCurrentPageReport]="true"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 15, 25, 50, 100]"
+    [scrollable]="true"
+    scrollHeight="600px"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    styleClass="p-datatable-striped"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    class="tdHight"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <ng-container *ngFor="let col of columns">
+          <th class="bg-dark text-white">
+            {{ col.header }}
+          </th>
+        </ng-container>
+        <th *ngIf="isAction" class="bg-dark text-white text-center">
+          Operation
+        </th>
+      </tr>
+      <tr *ngIf="filterData">
+        <ng-container *ngFor="let col of columns">
+          <th *ngIf="col.filter === 'text'">
+            <p-columnFilter
+              type="text"
+              [field]="col.field"
+              (input)="
+                dt2.filter($any($event.target)?.value, col?.field, 'contains')
+              "
+            ></p-columnFilter>
+          </th>
+
+          <th *ngIf="col.filter === 'dropDown'">
+            <p-columnFilter [field]="col.field">
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  [options]="status"
+                  (onChange)="filter($event.value)"
+                  placeholder="Any"
+                >
+                  <ng-template let-option pTemplate="item">
+                    <span
+                      [ngClass]="
+                        col.field === 'status'
+                          ? option.label === 'Active'
+                            ? 'badge bg-success'
+                            : 'badge bg-warning'
+                          : ''
+                      "
+                      [class]="'customer-badge status-' + option.value"
+                      >{{ option.label }}</span
+                    >
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th *ngIf="col.filter === 'null'"></th>
+          <!-- <th *ngIf="col.field === 'null'">
+
+                    </th> -->
+        </ng-container>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr class="text-center">
+        <td
+          [ngClass]="
+            col.field === 'status'
+              ? rowData[col.field] === 'Active'
+                ? 'badge bg-success'
+                : 'badge bg-warning'
+              : ''
+          "
+          *ngFor="let col of columns"
+        >
+          {{ rowData[col.field] }}
+        </td>
+        <td>
+          <ng-container *ngFor="let button of buttons">
+            <button
+              type="button"
+              class="mx-1"
+              [class]="button.class"
+              [id]="button.id"
+              (click)="onBtnClick(rowData, button.label)"
+            >
+              {{ button.label }}
+            </button>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No Recored Found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <h2 class="h2 text-primary text-center mt-2 pe-auto">Show All Exam Paper</h2>
+  <hr />
+  <p-confirmDialog
+    header="Confirmation"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
+  <app-viewdata-table
+    [columns]="cols"
+    [tableData]="responseExamData"
+    [buttons]="button"
+    (rowData)="getExamPepar($event)"
+    [isAction]="true"
+  >
+  </app-viewdata-table>
+</div>

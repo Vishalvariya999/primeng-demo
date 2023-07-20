@@ -1,0 +1,61 @@
+<!-- <p>{{examData|json}}</p> -->
+<p-confirmDialog
+  header="Confirmation"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+<div class="container-fluid">
+  <h2 class="h2 text-primary text-center mt-2 p-auto">Show All Exams</h2>
+  <hr />
+  <p-dialog
+    header="Show Result"
+    [(visible)]="display"
+    *ngFor="let result of resultData"
+  >
+    <div *ngIf="result" class="card" style="width: 18rem">
+      <img
+        src="assets/images/studprofile.jpeg"
+        class="card-img-top"
+        alt="logo"
+      />
+      <div class="card-body">
+        <h5 class="card-title">
+          <span
+            >Subject Name :
+            <span class="text-danger">{{ result?.subjectName }}</span></span
+          >
+        </h5>
+        <p class="card-text">
+          <span class=""
+            ><span>Status : </span
+            ><span
+              [ngClass]="
+                resultData?.resultStatus === 'Declare'
+                  ? 'badge bg-danger'
+                  : 'badge bg-success'
+              "
+            >
+              {{ result?.resultStatus }}</span
+            ></span
+          >
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Rank : {{ result?.rank }}</li>
+        <li class="list-group-item">Score : {{ result?.score }}</li>
+      </ul>
+    </div>
+    <div
+      *ngIf="resultData.length === 0"
+      class="card"
+      style="width: 18rem"
+    ></div>
+  </p-dialog>
+  <app-viewdata-table
+    [columns]="cols"
+    [tableData]="examData"
+    [buttons]="button"
+    [isAction]="true"
+    (rowData)="getData($event)"
+  >
+  </app-viewdata-table>
+</div>

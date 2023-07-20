@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+    <img src="assets/images/test.png" alt="logo" height="90px" />
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngFor="let data of navbar">
+          <a
+            class="nav-link fw-bold fs-5 text-white mx-1"
+            aria-current="page"
+            [routerLink]="data.link"
+            [id]="data.id"
+            >{{ data.data }}</a
+          >
+        </li>
+      </ul>
+      <!-- <p-breadcrumb [model]="navbar" [home]="home"></p-breadcrumb> -->
+      <form class="d-flex">
+        <a class="btn btn-lg btn-danger" id="btnLogout" (click)="onLogout()">
+          <fa-icon [icon]="faPowerOff"></fa-icon>
+        </a>
+      </form>
+      <div class="p-3">
+        <img
+          src="assets/images/studprofile.jpeg"
+          alt=""
+          height="70px"
+          width="70px"
+          style="border-radius: 50%"
+          id="reload"
+          (click)="reloadPage()"
+        />
+      </div>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

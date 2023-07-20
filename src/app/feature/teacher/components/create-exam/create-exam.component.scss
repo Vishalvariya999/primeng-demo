@@ -1,0 +1,13 @@
+.container{
+    background: linear-gradient(to right, #e66465, #9198e5);
+}
+  
+.selectBox{
+    width: 33%;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched{
+    border: 1px solid red;
+    box-shadow: 0 0 2px inset red;
+}

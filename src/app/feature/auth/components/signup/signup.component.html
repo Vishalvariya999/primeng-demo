@@ -1,0 +1,124 @@
+<div class="container-fluid position-relative min-vw-100 min-vh-100">
+  <div class="row bg-white rounded position-absolute">
+    <div class="col-lg-6">
+      <img
+        class="p-3 sideImages"
+        src="assets/images//Checklist.jpg"
+        alt="photo"
+        height="100%"
+        width="100%"
+      />
+    </div>
+    <div class="col-lg-6 p-3">
+      <form [formGroup]="SignUpForm" action="">
+        <h1 class="h1 text-center mt-5 mb-3">SignUp</h1>
+        <hr />
+        <div class="grid p-fluid">
+          <div class="field col-8 mt-5 mx-auto">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+              </span>
+              <span class="p-float-label">
+                <input
+                  type="text"
+                  pInputText
+                  class="p-inputtext-lg"
+                  formControlName="name"
+                  id="inputStudentName"
+                />
+                <label for="inputgroup">Username</label>
+              </span>
+            </div>
+            <small
+              class="text-danger"
+              *ngIf="
+                (frmControl['name'].touched && frmControl['name'].pristine) ||
+                (submited &&
+                  frmControl['name'].pristine &&
+                  frmControl['name'].invalid)
+              "
+              >Enter valid UserName</small
+            >
+          </div>
+          <div class="field col-8 mt-4 mx-auto">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+              </span>
+              <span class="p-float-label">
+                <input
+                  type="text"
+                  pInputText
+                  class="p-inputtext-lg"
+                  formControlName="email"
+                  id="inputStudentEmail"
+                />
+                <label for="inputgroup">E-mail address</label>
+              </span>
+            </div>
+            <small
+              class="text-danger"
+              id="emailError"
+              *ngIf="
+                (frmControl['email'].touched &&
+                  frmControl['email'].errors &&
+                  frmControl['email'].errors['pattern']) ||
+                (frmControl['email'].touched && frmControl['email'].pristine) ||
+                (submited &&
+                  frmControl['email'].pristine &&
+                  frmControl['email'].invalid)
+              "
+              >Enter valid email address</small
+            >
+          </div>
+          <div class="field col-8 mt-4 mx-auto">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-eye"></i>
+              </span>
+              <span class="p-float-label">
+                <input
+                  type="password"
+                  pInputText
+                  class="p-inputtext-lg"
+                  formControlName="password"
+                  id="inputStudentPassword"
+                />
+                <label for="inputgroup">Enter Password</label>
+              </span>
+            </div>
+            <small
+              class="text-danger"
+              *ngIf="
+                (frmControl['password'].touched &&
+                  frmControl['password'].pristine) ||
+                (submited &&
+                  frmControl['password'].pristine &&
+                  frmControl['password'].invalid)
+              "
+              >Enter valid password</small
+            >
+          </div>
+          <div class="col-lg-8 mt-4 mx-auto">
+            <button
+              pButton
+              type="button"
+              label="SignUp"
+              class="p-button-lg"
+              id="btnSignUp"
+              (click)="signUp()"
+              [loading]="loading"
+            ></button>
+          </div>
+        </div>
+        <div class="mt-4 text-center fw-bold">
+          <a class="text-decoration-none" [routerLink]="''"
+            >Already have an account ?
+            <span class="text-danger">Login here</span></a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

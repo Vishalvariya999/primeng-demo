@@ -1,0 +1,8 @@
+<div class="container-fluid">
+    <!-- <app-viewdata-table [studentData]="responsStudentData"></app-viewdata-table> -->
+    <h2 class="h2 text-primary text-center mt-2 pe-auto">Show All Students</h2>
+    <hr>
+    <app-viewdata-table [columns]="cols" [isAction]='true' [buttons]="button" [tableData]="responsStudentData"
+        [status]="statuses" (rowData)="getData($event)">
+    </app-viewdata-table>
+</div>

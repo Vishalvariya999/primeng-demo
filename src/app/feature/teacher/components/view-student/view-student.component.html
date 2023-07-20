@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="container shadow p-5 mt-5">
+    <div class="d-flex flex-row justify-content-between">
+      <h2 class="text-center fw-bold mt-3">Show Student Details</h2>
+    </div>
+    <hr />
+    <div class="d-flex flex-row justify-content-between">
+      <div class="col-lg-6">
+        <div class="card" style="width: 25rem">
+          <img
+            src="assets/images/studprofile.jpeg"
+            class="card-img-top p-3"
+            alt="logo"
+          />
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item fw-bold">
+              Student Name :
+              <span class="text-danger">{{ student?.name }}</span>
+            </li>
+            <li class="list-group-item fw-bold">
+              Email : <span class="text-danger">{{ student?.email }}</span>
+            </li>
+          </ul>
+          <div class="card-body">
+            <a
+              class="btn btn-md btn-primary"
+              (click)="showResult()"
+              id="viewStudentDetail"
+              >View Result</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" *ngIf="result">
+        <table class="table caption-top">
+          <caption class="p-1 text-center">
+            Student Exam Results
+          </caption>
+          <thead class="table bg-dark text-white">
+            <tr>
+              <th>Subject Name</th>
+              <th>Result Status</th>
+              <th>Score</th>
+              <th>Rank</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let studentResult of student.Result">
+              <td>{{ studentResult.subjectName }}</td>
+              <td
+                [ngClass]="
+                  studentResult.resultStatus
+                    ? 'badge bg-success'
+                    : 'badge bg-danger'
+                "
+              >
+                {{ studentResult.resultStatus }}
+              </td>
+              <td>{{ studentResult.score }}</td>
+              <td>{{ studentResult.rank }}</td>
+            </tr>
+            <tr *ngIf="student.Result.length === 0">
+              <td class="text-danger text-center" colspan="4">
+                No Recored Found
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
