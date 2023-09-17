@@ -7,11 +7,7 @@
     <div class="d-flex flex-row justify-content-between">
       <div class="col-lg-6">
         <div class="card" style="width: 25rem">
-          <img
-            src="assets/images/studprofile.jpeg"
-            class="card-img-top p-3"
-            alt="logo"
-          />
+          <img src="assets/images/studprofile.jpeg" class="card-img-top p-3" alt="logo" />
           <ul class="list-group list-group-flush">
             <li class="list-group-item fw-bold">
               Student Name :
@@ -22,12 +18,7 @@
             </li>
           </ul>
           <div class="card-body">
-            <a
-              class="btn btn-md btn-primary"
-              (click)="showResult()"
-              id="viewStudentDetail"
-              >View Result</a
-            >
+            <a class="btn btn-md btn-primary" (click)="showResult()" id="viewStudentDetail">View Result</a>
           </div>
         </div>
       </div>
@@ -47,14 +38,12 @@
           <tbody>
             <tr *ngFor="let studentResult of student.Result">
               <td>{{ studentResult.subjectName }}</td>
-              <td
-                [ngClass]="
-                  studentResult.resultStatus
-                    ? 'badge bg-success'
-                    : 'badge bg-danger'
-                "
-              >
-                {{ studentResult.resultStatus }}
+              <td>
+                <small [ngClass]="
+                studentResult.resultStatus
+                  ? 'badge bg-success'
+                  : 'badge bg-danger'
+              ">{{ studentResult.resultStatus }}</small>
               </td>
               <td>{{ studentResult.score }}</td>
               <td>{{ studentResult.rank }}</td>

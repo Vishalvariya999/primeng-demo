@@ -8,35 +8,35 @@ import { TeacherServicesService } from '../../services/teacher-services.service'
 @Component({
   selector: 'app-view-student',
   templateUrl: './view-student.component.html',
-  styleUrls: ['./view-student.component.scss']
+  styleUrls: ['./view-student.component.scss'],
 })
 export class ViewStudentComponent implements OnInit {
-
   public getId: any;
   public student: any;
   public result: boolean = false;
-  public faArrowCircleLeft = faArrowCircleLeft
+  public faArrowCircleLeft = faArrowCircleLeft;
   constructor(
     private teacherServicesService: TeacherServicesService,
     private activatedRoute: ActivatedRoute,
     private ngxService: NgxUiLoaderService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getDetails()
+    this.getDetails();
   }
 
   getDetails() {
-    this.ngxService.start()
-    this.getId = this.activatedRoute.snapshot.paramMap.get('id')
+    this.ngxService.start();
+    this.getId = this.activatedRoute.snapshot.paramMap.get('id');
     let queryParams = new HttpParams().append('id', this.getId);
-    this.ngxService.stop()
-    this.teacherServicesService.getViewStudent(queryParams).subscribe((res: any) => {
-      if (res) {
-        this.student = res.data[0]
-
-      }
-    })
+    this.ngxService.stop();
+    this.teacherServicesService
+      .getViewStudent(queryParams)
+      .subscribe((res: any) => {
+        if (res) {
+          this.student = res.data[0];
+        }
+      });
   }
 
   showResult() {
