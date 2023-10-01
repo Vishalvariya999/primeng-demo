@@ -5,14 +5,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { map } from 'rxjs';
 import { StudentServicesService } from '../../services/student-services.service';
 
-
 @Component({
   selector: 'app-exam-paper',
   templateUrl: './exam-paper.component.html',
-  styleUrls: ['./exam-paper.component.scss']
+  styleUrls: ['./exam-paper.component.scss'],
 })
 export class ExamPaperComponent implements OnInit {
-
   public getId!: string;
   public questionsData: any;
   public examMode: boolean = false;
@@ -28,25 +26,25 @@ export class ExamPaperComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService
   ) {
-    this.submitForm()
+    this.submitForm();
   }
 
   ngOnInit(): void {
-    this.getExamData()
+    this.getExamData();
   }
 
   submitForm() {
     this.answerForm = this.fb.group({
-      questions: this.fb.array([this.sendGroup()])
-    })
+      questions: this.fb.array([this.sendGroup()]),
+    });
   }
 
   sendGroup() {
     return this.fb.group({
       _id: ['', Validators.required],
       answer: ['', Validators.required],
-      question: ['', Validators.required]
-    })
+      question: ['', Validators.required],
+    });
   }
 
   get frmControl() {
@@ -54,54 +52,58 @@ export class ExamPaperComponent implements OnInit {
   }
 
   get questionsAdd() {
-    return (this.frmControl['questions'] as FormArray)
+    return this.frmControl['questions'] as FormArray;
   }
 
   getExamData() {
     this.getId = this.activatedRoute.snapshot.queryParams['id'];
-    this.studentServicesService.getExampaper(this.getId).
-      pipe(
+    this.studentServicesService
+      .getExampaper(this.getId)
+      .pipe(
         map((resData: any) => {
           if (resData) {
             this.editData = resData.data.map((response: any) => {
               let examdata = {
-                ...response
-              }
-              return examdata
-            })
+                ...response,
+              };
+              return examdata;
+            });
             this.editData.map((res: any, ind: any) => {
               if (res && ind) {
                 this.questionsAdd.push(this.sendGroup());
               }
-            })
-            return this.editData
+            });
+            return this.editData;
           }
         })
       )
       .subscribe((res: any) => {
         if (res) {
-          this.options = res
+          this.options = res;
           console.log('this.options :>> ', this.options);
-          this.answerForm.patchValue(
-            { questions: res }
-          )
+          this.answerForm.patchValue({ questions: res });
+        } else {
+          this.messageService.add({ severity: 'error', detail: res.message });
         }
-        else {
-          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
-        }
-      })
+      });
   }
 
   changeMode() {
     this.confirmationService.confirm({
       message: 'Are you sure start the exam now ?',
       accept: () => {
-        this.examMode = true
-        this.messageService.add({ severity: 'success', summary: 'Accepceted', detail: 'You have Accepceted' });
+        this.examMode = true;
+        this.messageService.add({
+          severity: 'success',
+          detail: 'You have Accepceted',
+        });
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-      }
+        this.messageService.add({
+          severity: 'error',
+          detail: 'You have rejected',
+        });
+      },
     });
   }
 
@@ -114,21 +116,28 @@ export class ExamPaperComponent implements OnInit {
           questions: this.answerForm.value.questions.map((resData: any) => {
             return {
               question: resData._id,
-              answer: resData.answer
+              answer: resData.answer,
+            };
+          }),
+        };
+        this.studentServicesService
+          .giveExam(this.getId, data.questions)
+          .subscribe((res: any) => {
+            if (res) {
+              this.router.navigate(['student/dashboard/showExam']);
+              this.messageService.add({
+                severity: 'success',
+                detail: 'Your response is recorded',
+              });
             }
-          })
-        }
-        this.studentServicesService.giveExam(this.getId, data.questions).subscribe((res: any) => {
-          if (res) {
-            this.router.navigate(['student/dashboard/showExam']);
-            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'Your response is recorded' });
-          }
-        })
+          });
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-      }
-    })
-
+        this.messageService.add({
+          severity: 'error',
+          detail: 'You have rejected',
+        });
+      },
+    });
   }
 }

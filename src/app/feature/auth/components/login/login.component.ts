@@ -110,7 +110,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.ngxService.stop();
             this.messageService.add({
               severity: 'success',
-              summary: 'Success',
               detail: res.message,
             });
             localStorage.setItem('access-token', res.data.token);
@@ -126,7 +125,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
           } else {
             this.messageService.add({
               severity: 'error',
-              summary: 'error',
               detail: res.message,
             });
             this.loginForm.reset();

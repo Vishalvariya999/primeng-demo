@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
@@ -12,24 +12,31 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
-
   constructor(
     private toastrService: ToastrService,
     private messageService: MessageService
-  ) { }
+  ) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMsg = '';
         if (error.error instanceof ErrorEvent) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+          this.messageService.add({
+            severity: 'error',
+            detail: error.error.message,
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            detail: error.error.message,
+          });
         }
-        else {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
-        }
-        return throwError(errorMsg)
+        return throwError(errorMsg);
       })
-    )
+    );
   }
 }

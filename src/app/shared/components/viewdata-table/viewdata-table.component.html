@@ -59,9 +59,13 @@
         </td>
         <td>
           <ng-container *ngFor="let button of buttons">
-            <button type="button" class="mx-1" [class]="button.class" [id]="button.id"
+            <!-- <button type="button" class="mx-1" [class]="button.btnClass" [id]="button.id"
               (click)="onBtnClick(rowData, button.label)">
-              {{ button.label }}
+              <i [class]="button.class"></i>
+            </button> -->
+            <button type="button" [class]="button.btnClass" [id]="button.id"
+              (click)="onBtnClick(rowData, button.label)">
+              <i [class]="button.class"></i>
             </button>
           </ng-container>
         </td>

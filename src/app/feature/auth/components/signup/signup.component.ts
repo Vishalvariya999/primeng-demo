@@ -8,11 +8,9 @@ import { AuthServiceService } from '../../services/auth-service.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
-
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-
   public SignUpForm!: FormGroup;
   public submited: boolean = false;
   public loading: boolean = false;
@@ -25,51 +23,61 @@ export class SignupComponent implements OnInit {
     this.singUpForm();
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   singUpForm() {
     this.SignUpForm = this.fb.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      password: ['', Validators.required]
-    })
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ],
+      ],
+      password: ['', Validators.required],
+    });
   }
 
   get frmControl() {
-    return this.SignUpForm.controls
+    return this.SignUpForm.controls;
   }
 
   signUp() {
     if (this.SignUpForm.invalid) {
       this.submited = true;
       this.loading = true;
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill all details' });
+      this.messageService.add({
+        severity: 'error',
+        detail: 'Please fill all details',
+      });
       this.loading = false;
-      return
-    }
-    else {
-      this.loading = true
+      return;
+    } else {
+      this.loading = true;
       const data = {
         ...this.SignUpForm.value,
-        role: 'student'
-      }
-      this.authServiceService.postUserdata(data).subscribe((res: IresponsesignUp) => {
-        if (res && res.statusCode === 200) {
-          this.SignUpForm.reset();
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User create successfully...' });
-          setTimeout(() => {
-            this.router.navigate(['/login']);
+        role: 'student',
+      };
+      this.authServiceService
+        .postUserdata(data)
+        .subscribe((res: IresponsesignUp) => {
+          if (res && res.statusCode === 200) {
+            this.SignUpForm.reset();
+            this.messageService.add({
+              severity: 'success',
+              detail: 'User create successfully...',
+            });
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+              this.loading = false;
+            }, 1500);
+          } else {
+            this.messageService.add({ severity: 'error', detail: res.message });
+            this.SignUpForm.reset();
             this.loading = false;
-          }, 1500)
-        }
-        else {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: res.message });
-          this.SignUpForm.reset();
-          this.loading = false;
-        }
-      })
+          }
+        });
     }
   }
 }
